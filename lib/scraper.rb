@@ -28,8 +28,18 @@ class Scraper
   end
 
   def get_courses
-    @doc.css(".posts-holder").h2
-    binding.pry
+    @doc.css(".posts-holder")
   end
+
+  def make_courses
+    all_data = get_courses
+    all_data.css("article").each do
+       mk_course = Course.new
+       mk_course.title = all_data.css("h2").text
+       mk_course.schedule = all_data.css("em").text
+       mk_course.description = all_data.css("p").text
+    end
+  end
+
 
 end
